@@ -1,18 +1,1 @@
-$def with (todos)
-$var title: index title
-$for todo in todos:
-    <ul>
-        <li>$todo['ID']</li>
-        <li>$todo['NAME']</li>
-        <li>$todo['TITLE']</li>
-        <li>$todo['NUM']</li>
-    </ul>
-
-<form method="post" action="add">
-    <p>
-        <input type="text" name="name"/>
-        <input type="text" name="title"/>
-        <input type="number" name="num"/>
-        <input type="submit" value="Add" />
-    </p>
-</form>
+<div ui-view></div>
