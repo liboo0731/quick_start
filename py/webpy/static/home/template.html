@@ -1,0 +1,32 @@
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" ui-sref="home">
+        <span>博人撰</span>
+        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+	<div class="jumbotron">
+	  <h1>你好，世界！</h1>
+	  <p>既然选择了远方，便只顾风雨兼程。</p>
+	  <p><a class="btn btn-primary btn-lg" ui-sref="detail" role="button">了解更多</a></p>
+	</div>
+	<div class="row">
+	<div class="col-md-4 col-xs-12" ng-repeat="item in $ctrl.data.data">
+	<div class="media">
+	  <div class="media-left">
+	    <a ui-sref="{{item.uiSref}}">
+	      <img class="media-object" ng-src="{{item.imgUrl}}" alt="Test images" style="width: 64px; height: 64px;">
+	    </a>
+	  </div>
+	  <div class="media-body">
+        <h4 class="media-heading" ng-bind="item.title"></h4>
+        <p ng-bind="item.content"></p>
+      </div>
+	</div>
+	</div>
+	</div>
+</div>
