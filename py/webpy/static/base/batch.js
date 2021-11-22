@@ -1,37 +1,64 @@
-angular.module('base').component('baseList',{
-	bindings:{
-		data:'<'
-	},
-	templateUrl: 'static/base/template.html?'+resourcesVersion,
-	controller: ['NgTableParams','$scope','$element',function(NgTableParams,$scope,$element){
-		    var self = this;
-    data = [{
-        name: "123",
-        age: 12,
-        money: 23,
-    }];
-    var originalData = angular.copy(data);
+angular.module("myApp", ["ngTable", "ngTableDemos"]);
+
+(function() {
+  "use strict";
+
+  angular.module("myApp").controller("demoController", demoController);
+  demoController.$inject = ["NgTableParams", "ngTableSimpleList"];
+
+  function demoController(NgTableParams, simpleList) {
+    var self = this;
+
+    var originalData = angular.copy(simpleList);
 
     self.tableParams = new NgTableParams({}, {
-      filterDelay: 0,
-      dataset: angular.copy(data)
+      dataset: angular.copy(simpleList)
     });
 
-    self.cancel = cancel;
+    self.deleteCount = 0;
+
+    self.add = add;
+    self.cancelChanges = cancelChanges;
     self.del = del;
-    self.save = save;
+    self.hasChanges = hasChanges;
+    self.saveChanges = saveChanges;
 
     //////////
 
-    function cancel(row, rowForm) {
-      var originalRow = resetRow(row, rowForm);
-      angular.extend(row, originalRow);
+    function add() {
+      self.isEditing = true;
+      self.isAdding = true;
+      self.tableParams.settings().dataset.unshift({
+        name: "",
+        age: null,
+        money: null
+      });
+      // we need to ensure the user sees the new row we've just added.
+      // it seems a poor but reliable choice to remove sorting and move them to the first page
+      // where we know that our new item was added to
+      self.tableParams.sorting({});
+      self.tableParams.page(1);
+      self.tableParams.reload();
+    }
+
+    function cancelChanges() {
+      resetTableStatus();
+      var currentPage = self.tableParams.page();
+      self.tableParams.settings({
+        dataset: angular.copy(originalData)
+      });
+      // keep the user on the current page when we can
+      if (!self.isAdding) {
+        self.tableParams.page(currentPage);
+      }
     }
 
     function del(row) {
       _.remove(self.tableParams.settings().dataset, function(item) {
         return row === item;
       });
+      self.deleteCount++;
+      self.tableTracker.untrack(row);
       self.tableParams.reload().then(function(data) {
         if (data.length === 0 && self.tableParams.total() > 0) {
           self.tableParams.page(self.tableParams.page() - 1);
@@ -40,22 +67,154 @@ angular.module('base').component('baseList',{
       });
     }
 
-    function resetRow(row, rowForm){
-      row.isEditing = false;
-      rowForm.$setPristine();
+    function hasChanges() {
+      return self.tableForm.$dirty || self.deleteCount > 0
+    }
+
+    function resetTableStatus() {
+      self.isEditing = false;
+      self.isAdding = false;
+      self.deleteCount = 0;
+      self.tableTracker.reset();
+      self.tableForm.$setPristine();
+    }
+
+    function saveChanges() {
+      resetTableStatus();
+      var currentPage = self.tableParams.page();
+      originalData = angular.copy(self.tableParams.settings().dataset);
+    }
+  }
+})();
+
+(function() {
+  "use strict";
+
+  angular.module("myApp").controller("dynamicDemoController", dynamicDemoController);
+  dynamicDemoController.$inject = ["NgTableParams", "ngTableSimpleList"];
+
+  function dynamicDemoController(NgTableParams, simpleList) {
+    var self = this;
+
+    var originalData = angular.copy(simpleList);
+
+    self.cols = [{
+      field: "name",
+      title: "Name",
+      filter: {
+        name: "text"
+      },
+      sortable: "name",
+      dataType: "text"
+    }, {
+      field: "age",
+      title: "Age",
+      filter: {
+        age: "number"
+      },
+      sortable: "age",
+      dataType: "number"
+    }, {
+      field: "money",
+      title: "Money",
+      filter: {
+        money: "number"
+      },
+      sortable: "money",
+      dataType: "number"
+    }, {
+      field: "action",
+      title: "",
+      dataType: "command"
+    }];
+    self.tableParams = new NgTableParams({}, {
+      dataset: angular.copy(simpleList)
+    });
+
+    self.deleteCount = 0;
+
+    self.add = add;
+    self.cancelChanges = cancelChanges;
+    self.del = del;
+    self.hasChanges = hasChanges;
+    self.saveChanges = saveChanges;
+
+    //////////
+
+    function add() {
+      self.isEditing = true;
+      self.isAdding = true;
+      self.tableParams.settings().dataset.unshift({
+        name: "",
+        age: null,
+        money: null
+      });
+      // we need to ensure the user sees the new row we've just added.
+      // it seems a poor but reliable choice to remove sorting and move them to the first page
+      // where we know that our new item was added to
+      self.tableParams.sorting({});
+      self.tableParams.page(1);
+      self.tableParams.reload();
+    }
+
+    function cancelChanges() {
+      resetTableStatus();
+      var currentPage = self.tableParams.page();
+      self.tableParams.settings({
+        dataset: angular.copy(originalData)
+      });
+      // keep the user on the current page when we can
+      if (!self.isAdding) {
+        self.tableParams.page(currentPage);
+      }
+    }
+
+    function del(row) {
+      _.remove(self.tableParams.settings().dataset, function(item) {
+        return row === item;
+      });
+      self.deleteCount++;
       self.tableTracker.untrack(row);
-      return _.findWhere(originalData, function(r){
-        return r.id === row.id;
+      self.tableParams.reload().then(function(data) {
+        if (data.length === 0 && self.tableParams.total() > 0) {
+          self.tableParams.page(self.tableParams.page() - 1);
+          self.tableParams.reload();
+        }
       });
     }
 
-    function save(row, rowForm) {
-      var originalRow = resetRow(row, rowForm);
-      angular.extend(originalRow, row);
+    function hasChanges() {
+      return self.tableForm.$dirty || self.deleteCount > 0
     }
 
-	}]
-});
+    function resetTableStatus() {
+      self.isEditing = false;
+      self.isAdding = false;
+      self.deleteCount = 0;
+      self.tableTracker.reset();
+      self.tableForm.$setPristine();
+    }
+
+    function saveChanges() {
+      resetTableStatus();
+      var currentPage = self.tableParams.page();
+      originalData = angular.copy(self.tableParams.settings().dataset);
+    }
+  }
+})();
+
+
+(function() {
+  "use strict";
+
+  angular.module("myApp").run(configureDefaults);
+  configureDefaults.$inject = ["ngTableDefaults"];
+
+  function configureDefaults(ngTableDefaults) {
+    ngTableDefaults.params.count = 5;
+    ngTableDefaults.settings.counts = [];
+  }
+})();
 
 /**********
   The following directives are necessary in order to track dirty state and validity of the rows
@@ -64,7 +223,7 @@ angular.module('base').component('baseList',{
 */
 
 (function() {
-  angular.module("base").directive("demoTrackedTable", demoTrackedTable);
+  angular.module("myApp").directive("demoTrackedTable", demoTrackedTable);
 
   demoTrackedTable.$inject = [];
 
@@ -176,7 +335,7 @@ angular.module('base').component('baseList',{
 })();
 
 (function() {
-  angular.module("base").directive("demoTrackedTableRow", demoTrackedTableRow);
+  angular.module("myApp").directive("demoTrackedTableRow", demoTrackedTableRow);
 
   demoTrackedTableRow.$inject = [];
 
@@ -216,7 +375,7 @@ angular.module('base').component('baseList',{
 })();
 
 (function() {
-  angular.module("base").directive("demoTrackedTableCell", demoTrackedTableCell);
+  angular.module("myApp").directive("demoTrackedTableCell", demoTrackedTableCell);
 
   demoTrackedTableCell.$inject = [];
 
