@@ -12,7 +12,7 @@ require.config({
 	shim: {
 		'plugins/bootstrap3/js/bootstrap':['jquery'],
 		'js/angular': {
-    		deps:['plugins/bootstrap3/js/bootstrap'],
+    		deps:['plugins/bootstrap3/js/bootstrap', 'js/lodash'],
     		exports: 'angular'
     	},
     	'js/ocLazyLoad.require': {
