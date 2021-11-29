@@ -1,5 +1,5 @@
-angular.module('home').component('homeForm',{
-    templateUrl:'static/home/form/template.html',
+angular.module('app').component('appDetail',{
+    templateUrl:'static/app/detail/template.html',
     controller:[function(){
         var $ctrl = this;
         $ctrl.$onInit = function(){

@@ -18,7 +18,7 @@ define([
 				}]
 			},
 			lazyLoad: function($transition$){
-				return $transition$.injector().get('$ocLazyLoad').load(['home/component', 'home/modalDirective']);
+				return $transition$.injector().get('$ocLazyLoad').load(['home/component', 'common/modalDirective']);
 			}
 		});
 	}]);

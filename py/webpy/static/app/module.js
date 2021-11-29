@@ -13,7 +13,7 @@ define([
 			redirectTo: 'app.list',
 			lazyLoad: function($transition$){
 				return $transition$.injector().get('$ocLazyLoad').load([
-					'app/service'
+					'app/service', 'common/modalDirective'
 				]);
 			}
 		});
@@ -29,20 +29,6 @@ define([
 			},
 			lazyLoad: function($transition$){
 				return $transition$.injector().get('$ocLazyLoad').load(['app/list/component']);
-			}
-		});
-		$stateProvider.state('app.form', {
-			url: '/form',
-			component: 'appForm',
-			resolve: {
-				data: ['appService',function(appService){
-					return appService.get().$promise.then(function(resp){
-						return resp
-					});
-				}]
-			},
-			lazyLoad: function($transition$){
-				return $transition$.injector().get('$ocLazyLoad').load(['app/form/component']);
 			}
 		});
 	}]);

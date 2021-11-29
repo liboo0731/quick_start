@@ -1,7 +1,19 @@
-<a ui-sref="app.form">To APP Form</a>
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" ui-sref="home">
+        <span>博人撰</span>
+        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</nav>
 <div class="container">
   <div class="row">
-      <h2>Super Table</h2>
+
+    <a uib-modal="{path:'app/detail/component',component:'appDetail',data:{}}"><h3>链接触发</h3></a>
+
+<button class="btn btn-primary" type="button" uib-modal="{path:'app/form/component',component:'appForm'}">按钮触发</button>
     <form class="col-xs-offset-6 col-xs-6" name="$ctrl.searchForm" novalidate ng-submit="$ctrl.applyGlobalSearch()">
 			<div class="input-group">
 
