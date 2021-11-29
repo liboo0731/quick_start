@@ -1,0 +1,12 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="$ctrl.dismiss()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<div class="modal-title" ng-bind="$ctrl.resolve.title"></div>
+</div>
+<div class="modal-body">
+	<dl class="dl-horizontal item-detail">
+		<dt>显示名：</dt>
+		<dd ng-bind="$ctrl.resolve.data.name"></dd>
+	</dl>
+</div>

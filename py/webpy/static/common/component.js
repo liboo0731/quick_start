@@ -5,10 +5,10 @@ angular.module('brz').component('commonList',{
 	templateUrl: 'static/common/template.html?'+resourcesVersion,
 	controller: ['NgTableParams','$scope','$element',function(NgTableParams,$scope,$element){
 		var self = this;
-		
+
 		self.$onInit = function(){
 			self.brzDataSet = self.data.data;
-		
+
 			// 表格实例
 			self.tableParams = new NgTableParams({
 				count:5,
@@ -23,14 +23,14 @@ angular.module('brz').component('commonList',{
 				},
 				interceptors:[{	// 在数据行显示在表中之前对getData函数的调用结果的拦截器集合，集合中后一个拦截器会去拦截前一个的返回值，最终返回最后一个拦截器的处理结果
 		    		response:function(data,params){
-		    			return data;	
+		    			return data;
 		    		},
 		    		responseError:function(reason,params){
 		    			return reason;
 		    		}
 				}]
 			});
-		    
+
 			// 全局搜索
 			self.applyGlobalSearch = function(){
 				var term = self.globalSearchTerm;
@@ -43,7 +43,7 @@ angular.module('brz').component('commonList',{
 			self.isFiltersVisible = true;
 			// 是否启用过滤
 		    self.isFiltersEnabled = true;
-		    
+
 			// 是否启用排序
 			self.isSortable = true;
 		}

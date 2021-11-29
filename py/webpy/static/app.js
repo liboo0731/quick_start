@@ -1,8 +1,9 @@
 define([
-		'js/angular',
 		'js/angular-ui-router',
 		'js/angular-resource',
 		'plugins/ng-table/ng-table',
+		'js/ui-bootstrap-tpls',
+		'js/drag',
 		'home/service'
 	],function(){
 		var brzModule=angular.module('brz',[

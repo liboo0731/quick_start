@@ -16,13 +16,19 @@ require.config({
     		exports: 'angular'
     	},
     	'js/ocLazyLoad.require': {
-    		deps: ['js/angular']
+    		deps: ['angular']
     	},
     	'js/angular-ui-router': {
     		deps: ['js/ocLazyLoad.require']
     	},
     	'js/angular-resource': {
-    		deps: ['js/angular']
+    		deps: ['angular']
+    	},
+    	'js/drag': {
+    	    deps: ['jquery']
+    	},
+    	'js/ui-bootstrap-tpls': {
+    	    deps: ['angular', 'plugins/bootstrap3/js/bootstrap']
     	},
     	'home/service': {
     		deps: ['home/module']

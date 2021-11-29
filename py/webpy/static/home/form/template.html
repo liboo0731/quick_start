@@ -1,0 +1,46 @@
+<form name="userForm" ng-submit="$ctrl.submit($event,userForm)" novalidate>
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="$ctrl.dismiss()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<div class="modal-title" ng-bind="$ctrl.resolve.title.title"></div>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label class="control-label" for="name">显示名称</label>
+			<input class="form-control" name="name" ng-model="$ctrl.user.name" type="text" autocomplete="off" placeholder="请输入显示名" ng-pattern="/^[\u4E00-\u9FA5\uf900-\ufa2d\w\s.]*$/" ng-maxlength="18" required>
+			<span class="help-block">可输入汉字、英文字母、数字、下划线和英文点，最多输入18个字符</span>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.name.$error.required">请输入显示名</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.name.$error.maxlength">不能多于18个字符</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && !userForm.name.$error.maxlength && userForm.name.$error.pattern">请输入合法的显示名</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="email">账号</label>
+			<input class="form-control" name="email" ng-model="$ctrl.user.email" type="email" autocomplete="off" placeholder="请输入邮箱" check-email="$ctrl.resolve.data" ng-pattern="/^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?$/" ng-maxlength="50" required>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.email.$error.required">请输入邮箱地址</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && !userForm.email.$error.maxlength && userForm.email.$error.pattern">请输入正确格式的邮箱地址</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.email.$error.maxlength">最大长度不能超多50</div>
+			<div class="help-block form-error" ng-show="userForm.email.$error.uniqueEmail">该邮箱已存在</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="password">密码</label>
+			<input class="form-control" name="password" ng-model="$ctrl.user.password" type="password" ng-minlength="6" ng-maxlength="20" ng-required="$ctrl.resolve.data?false:true">
+			<span class="help-block">6-20个字符，区分大小写</span>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.password.$error.required">请输入密码</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.password.$error.minlength">不能少于6个字符</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.password.$error.maxlength">不能多于20个字符</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="checkPassword">确认密码</label>
+			<input class="form-control" name="checkPassword" ng-model="checkPassword" type="password" ng-minlength="6" ng-maxlength="20" equal-to="$ctrl.user.password" ng-required="$ctrl.resolve.data?false:true">
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.checkPassword.$error.required">请再次输入密码</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.checkPassword.$error.minlength">不能少于6个字符</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && userForm.checkPassword.$error.maxlength">不能多于20个字符</div>
+			<div class="help-block form-error" ng-show="userForm.$submitted && !userForm.checkPassword.$error.required && !userForm.checkPassword.$error.minlength && !userForm.checkPassword.$error.maxlength && userForm.checkPassword.$error.same">两次密码输入不一致</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary btn-submit" type="submit">提交</button>
+		<button class="btn btn-default btn-dismiss" type="button" ng-click="$ctrl.dismiss();">取消</button>
+	</div>
+</form>

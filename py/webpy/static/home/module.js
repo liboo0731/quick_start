@@ -1,9 +1,10 @@
 define([
-	'js/angular'
+	'angular'
 	],function(){
 	var homeModule=angular.module('home', [
 			'ui.router',
 			'ngResource',
+			'ui.bootstrap',
 			'oc.lazyLoad']);
 	homeModule.config(['$stateProvider',function($stateProvider){
 		$stateProvider.state('home', {
@@ -17,7 +18,7 @@ define([
 				}]
 			},
 			lazyLoad: function($transition$){
-				return $transition$.injector().get('$ocLazyLoad').load(['home/component']);
+				return $transition$.injector().get('$ocLazyLoad').load(['home/component', 'home/modalDirective']);
 			}
 		});
 	}]);
