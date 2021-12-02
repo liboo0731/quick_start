@@ -3754,7 +3754,7 @@ if __name__ == '__main__':
         _stderr('\nError: No application specified.\n')
         sys.exit(1)
 
-    sys.path.insert(0, 'views')
+    sys.path.insert(0, '../../views')
     sys.modules.setdefault('bottle', sys.modules['__main__'])
 
     host, port = (opt.bind or 'localhost'), 8080

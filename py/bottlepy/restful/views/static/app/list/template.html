@@ -1,0 +1,72 @@
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" ui-sref="home">
+        <span>博人撰</span>
+        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+
+    <a uib-modal="{path:'app/detail/component',component:'appDetail',data:{}}"><h3>链接触发</h3></a>
+
+<button class="btn btn-primary" type="button" uib-modal="{path:'app/form/component',component:'appForm'}">按钮触发</button>
+    <form class="col-xs-offset-6 col-xs-6" name="$ctrl.searchForm" novalidate ng-submit="$ctrl.applyGlobalSearch()">
+			<div class="input-group">
+
+				<span class="input-group-btn">
+		        	<button type="button" class="btn btn-default" ng-click="$ctrl.add()">添加</button>
+		      	</span>
+				<input type="text" class="form-control" placeholder="请输入需要查询的内容" name="searchTerm" ng-model="$ctrl.globalSearchTerm" required />
+			 <span class="input-group-addon">
+                  <input type="checkbox" ng-init="isFiltersVisible=true" ng-checked="isFiltersVisible" ng-model="isFiltersVisible" aria-label="...">
+                </span>
+              <span class="input-group-btn" >
+                    <button type="button" class="btn btn-default" ng-click="$ctrl.tableParams.filter({});$ctrl.globalSearchTerm=null">刷新</button>
+					<button class="btn btn-primary" type="submit" ng-disabled="$ctrl.searchForm.$invalid">搜索</button>
+				</span>
+			</div>
+		</form>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table ng-table="$ctrl.tableParams" class="table table-bordered table-hover table-condensed" ng-form="$ctrl.tableForm" show-filter="isFiltersVisible" disable-filter="$ctrl.isAdding" >
+        <colgroup>
+          <col width="60%" />
+          <col width="10%" />
+          <col width="15%" />
+          <col width="15%" />
+        </colgroup>
+        <tr ng-repeat="row in $data" ng-form="rowForm" ng-switch="row.isEditing && $ctrl.isEditing">
+          <td title="'Name'" filter="{name: 'text'}" sortable="'name'" ng-class="name.$dirty ? 'bg-warning' : ''" ng-form="name" >
+            <span ng-switch-default>{{row.name}}</span>
+            <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+              <input type="text" name="name" ng-model="row.name" class="editable-input form-control" required />
+            </div>
+          </td>
+          <td title="'Age'" filter="{age: 'number'}" sortable="'age'" ng-class="age.$dirty ? 'bg-warning' : ''" ng-form="age" >
+            <span ng-switch-default>{{row.age}}</span>
+            <div class="controls" ng-class="age.$invalid && age.$dirty ? 'has-error' : ''" ng-switch-when="true">
+              <input type="number" name="age" ng-model="row.age" class="editable-input form-control" required/>
+            </div>
+          </td>
+          <td title="'Money'" filter="{money: 'number'}" sortable="'money'" ng-class="money.$dirty ? 'bg-warning' : ''" ng-form="money" >
+            <span ng-switch-default>{{row.money}}</span>
+            <div class="controls" ng-class="money.$invalid && money.$dirty ? 'has-error' : ''" ng-switch-when="true">
+              <input type="number" name="money" ng-model="row.money" class="editable-input form-control" required/>
+            </div>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm" ng-click="$ctrl.save(row, rowForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+            <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel(row, rowForm);$ctrl.isAdding=false" ng-if="row.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+            <button class="btn btn-default btn-sm" ng-click="row.isEditing=true;$ctrl.isAdding=true" ng-if="!row.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
+            <button class="btn btn-danger btn-sm" ng-click="$ctrl.del(row)" ng-if="!row.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

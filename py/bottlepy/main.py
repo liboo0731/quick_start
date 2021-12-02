@@ -1,15 +1,15 @@
-from bottle import route
-from bottle import view
-from bottle import template
-from bottle import request
-from bottle import abort
-from bottle import redirect
-from bottle import static_file
-from bottle import error
-from bottle import get
-from bottle import post
-from bottle import Bottle
-from bottle import run
+from utils.bottle import route
+from utils.bottle import view
+from utils.bottle import template
+from utils.bottle import request
+from utils.bottle import abort
+from utils.bottle import redirect
+from utils.bottle import static_file
+from utils.bottle import error
+from utils.bottle import get
+from utils.bottle import post
+from utils.bottle import Bottle
+from utils.bottle import run
 
 
 @error(404)

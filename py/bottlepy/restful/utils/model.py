@@ -39,7 +39,8 @@ class DBTools:
 
 
 if __name__ == '__main__':
-    import CONST_APP
+    from app01 import CONST_APP
+
     db = DBTools(CONST_APP.DATABASE)
     db.execute(CONST_APP.CREATE_DB_APP01)
     print(db.get_tables())
@@ -48,3 +49,4 @@ if __name__ == '__main__':
     db.execute(f'insert into {CONST_APP.TABLE_NAME_APP01} (id, name, passwd) values (?,?,?)', [None, 'name', '123456'])
     print(db.execute(f'select * from {CONST_APP.TABLE_NAME_APP01}', result_dict=False))
     print(db.execute(f'select * from {CONST_APP.TABLE_NAME_APP01}'))
+    db.execute(f'delete from {CONST_APP.TABLE_NAME_APP01}')
