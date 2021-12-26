@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="plugins/bootstrap3/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body ng-controller="myCtrl">
+
+<div 
+	ng-click="cl($event)"
+	ng-swipe-disable-mouse 
+	ng-swipe-left="lf($event);$event.preventDefault();$event.stopPropagation();" 
+	ng-swipe-right="rg($event);$event.preventDefault();$event.stopPropagation();" 
+	style="width: 320px;height: 480px;background: #ccc;"></div>
+
+<!-- <div class="article" ng-touchstart="startTouch()" ng-touchend="endTouch()">111111</div> -->
+<script src="js/jquery.js"></script>
+<script src="plugins/bootstrap3/js/bootstrap.js"></script>
+<script src="js/angular.js"></script>
+<script src="js/angular-touch.js"></script>
+<script type="text/javascript">
+angular.module('myApp',['ngTouch'])
+.controller('myCtrl',function($swipe,$scope){
+	$scope.cl = function(event){
+		$(event.target).css({'background':'blue'});
+	}
+	$scope.lf = function(event){
+		$(event.target).css({'background':'red'});
+	}
+	$scope.rg = function(event){
+		$(event.target).css({'background':'yellow'});
+	}
+})
+/* .directive("ngTouchstart",function() {
+    return {
+        controller: ["$scope", "$element",
+        function($scope, $element) {
+            $element.bind("touchstart", onTouchStart);
+            function onTouchStart(event) {
+                var method = $element.attr("ng-touchstart");
+                $scope.$apply(method);
+            }
+        }]
+    }
+})
+.directive("ngTouchmove",function() {
+    return {
+        controller: ["$scope", "$element",
+        function($scope, $element) {
+            $element.bind("touchstart", onTouchStart);
+            function onTouchStart(event) {
+                event.preventDefault();
+                $element.bind("touchmove", onTouchMove);
+                $element.bind("touchend", onTouchEnd);
+            }
+            function onTouchMove(event) {
+                var method = $element.attr("ng-touchmove");
+                $scope.$apply(method);
+            }
+            function onTouchEnd(event) {
+                event.preventDefault();
+                $element.unbind("touchmove", onTouchMove);
+                $element.unbind("touchend", onTouchEnd);
+            }
+        }]
+    }
+})
+.directive("ngTouchend",function() {
+    return {
+        controller: ["$scope", "$element",
+        function($scope, $element) {
+            $element.bind("touchend", onTouchEnd);
+            function onTouchEnd(event) {
+                var method = $element.attr("ng-touchend");
+                $scope.$apply(method);
+            }
+        }]
+    }
+}) */
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+
+建立互信
+远程执行命令
+远程拷贝文件
+日志写入
+执行步骤
+架构，操作系统类型判断
+当前用户判断
+预览压缩包文件
+当前脚本目录
+交互输入
+导出环境变量
+切换用户执行命令
+
+
+SSH=`ssh -o NumberOfPasswordPrompts=0 -o ConnectTimeout=3 -o StrictHostKeyChecking=no -o BatchMode=yes`
+SCP=`scp -o NumberOfPasswordPrompts=0 -o ConnectTimeout=3 -o StrictHostKeyChecking=no -o BatchMode=yes`
+
+main "$@" 2>&1 |tee -a log.txt
+
+[ "$UID" -eq 0 ] && echo "user: root"
+[ "$UID" -ne 0 ] && echo "user: others"
+
+echo "org.apache.spark:hive_12.34" |awk -F":" '{gsub(/\./,"/",$1);print $1"/"$2}'
+
+
+如文件a.txt，内容为：
+1111
+222
+...
+3aa
+THIS LINE
+ddddd
+
+sed -n '1,/THIS LINE/p' urfile
+awk '/THIS LINE/{T=1}!T' file
+grep -B 1
+sed '/THIS LINE/q' a.txt
+
+
+在远程服务器上执行本地的shell脚本
+[root@localhost zzx]# sh echoip.sh
+192.168.67.131
+[root@localhost zzx]# ssh root@192.168.67.129 -C "/bin/bash" < echoip.sh
+root@192.168.67.129's password:
+192.168.67.129
+[root@localhost zzx]#

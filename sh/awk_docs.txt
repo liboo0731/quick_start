@@ -1,0 +1,45 @@
+
+awk [ -F re] [parameter...] ['prog'] [-f progfile]
+
+RS：Record Separator，记录分隔符
+ORS：Output Record Separate，输出当前记录分隔符
+FS：Field Separator，字段分隔符
+OFS：Out of Field Separator，输出字段分隔符
+
+1. 匹配第一行
+awk 'NR==1{print}'
+
+2. 匹配最后一行
+awk 'END{print}'
+
+3. 从第一行到匹配的某一行
+awk '/str/{T=1}!T{print}
+
+4. 替换某列或所有列中的字符串
+awk '{gsub(/str/,"new");print}'
+awk '{gsub(/str/,"new",$1);print}'
+
+5. 设置其他分割符
+awk 'BEGIN{RS="<"}{print}'
+
+6. 匹配最后一列
+awk '{print $NF}'
+
+7. 条件判断
+awk '{if(NR%3==0) print;else if() print;else print}'
+
+8. 多条件匹配
+awk '!/re11|re12/&&/re2/&&/re3/||/re4/{print}'
+awk '$1~!/re1/&&/re2/&&/re3/||/re4/{print}'
+
+9. 把文件每隔三行合并成一行
+awk '{if(NR%3!=0)ORS=" ";else ORS="\n"}1' 
+在这里action为空，因此默认为{print $0}；1为定值，非0，因此执行action，即print $0
+
+10. 设置多个分割符
+awk -F"[<|>]" '{print}'
+
+11. 多个先决条件
+awk 'NR<6&&NR!=2&&NR!=4{print}'
+
+

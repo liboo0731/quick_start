@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" >
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>angular  direcive</title>
+	<link rel="shortcut icon" href="favicon.ico" /> 
+	<script src="js/angular.js"></script>
+	<!-- swipe事件需要依赖touch模块，引入Animate是为了渐出动画效果 -->
+	<script src="js/angular-touch.js"></script>
+	<script src="js/angular-animate.js"></script>
+	<style type="text/css">
+		html,body{touch-action: none;width: 100%;height: 100%;}/*touch-action: none;解决Unable to preventDefault inside passive event listener due to target being treated as passive错误*/
+		.main{text-align: center;width: 100%;}
+		.sider{height: 100%;color: #fff;width: 100%;background: rgba(0,0,0,0.5);transition: all 1s linear;}
+		.sideleft{position: fixed;top: 0;right: 0;text-align: right;}
+		.sideright{position: absolute;top: 0;left: 0;background: rgba(82,205,186,0.5);}
+		.sideright.ng-hide{transform: translateX(-100%);transition: all 0s linear;}
+		.sideleft .hidec{position: absolute;left:0;top:0;width: 50%;height: 100%;}
+		.sideleft .content{position: absolute;right:0;top:0;width: 50%;height: 100%;background: rgba(82,160,205,0.5);}
+		.sideleft.ng-hide{transform: translateX(100%);transition: all 0s linear;}
+	</style>
+</head>
+<body ng-controller="swipeController" ng-swipe-disable-mouse ng-swipe-left="slfun();$event.preventDefault(); $event.stopPropagation();" ng-swipe-right="srfun();$event.preventDefault(); $event.stopPropagation();" >
+	<div class="main">
+		<button ng-click="showleft=true">左边层</button>
+		滑动效果调在手机模式看<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!<br/>
+	    test swipe!test swipe!test swipe!
+	</div>
+	<div class="sideright sider" ng-show='showright' ng-swipe-left="clfun();$event.preventDefault(); $event.stopPropagation();">
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!<br/>
+		right!
+	</div>
+	<div class="sideleft sider" ng-show='showleft' ng-swipe-right="crfun();$event.preventDefault(); $event.stopPropagation();">
+		<div class="hidec" ng-click='showleft=false'></div>
+		<div class="content">
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!<br/>
+			I'm the left div ,swipe left to see me!
+		</div>
+	</div>
+</body>
+<script>
+		var dapp = angular.module('myApp', ['ngTouch','ngAnimate']);//swipe需要依赖touch模块，引入ngAnimate是为了渐出动画效果
+		dapp.controller('swipeController',function($scope,$animate){
+			var self = this;
+			$scope.showleft = false;
+			$scope.showright = false;
+			$scope.color = 'yellow';
+			$scope.slfun = function(){
+				$scope.showleft = true;
+			}
+			$scope.srfun = function(){
+				$scope.showright = true;
+			}
+			$scope.clfun = function(){
+				$scope.showright = false;
+			}
+			$scope.crfun = function(){
+				$scope.showleft = false;
+			}
+		})		
+</script>
+</html>
